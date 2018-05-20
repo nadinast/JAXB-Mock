@@ -1,3 +1,5 @@
+package bindingCompiler;
+
 import java.io.File;
 
 public class JavaFile {
@@ -8,6 +10,7 @@ public class JavaFile {
     private String param;
     private String constructorAssign;
     private String getter;
+    private String setter;
 
     public JavaFile(String fileName) {
         utils = new Utils();
@@ -16,6 +19,7 @@ public class JavaFile {
         param = utils.getConstructorParamTemplate();
         constructorAssign = utils.getConstructorAssignTemplate();
         getter = utils.getGetterTemplate();
+        setter = utils.getSetterTemplate();
 
         createJavaFile(fileName);
     }
@@ -32,6 +36,7 @@ public class JavaFile {
         fileTemplate = fileTemplate.replace("{PARAM}", param + "{PARAM}");
         fileTemplate = fileTemplate.replace("{CONSTRUCTOR_ASSIGN}", constructorAssign + "{CONSTRUCTOR_ASSIGN}");
         fileTemplate = fileTemplate.replace("{GETTER}", getter + "{GETTER}");
+        fileTemplate = fileTemplate.replace("{SETTER}", setter + "{SETTER}");
 
         fileTemplate = fileTemplate.replace("{FIELD_TYPE}", fieldType);
         fileTemplate = fileTemplate.replace("{FIELD_NAME}", fieldName);
@@ -48,6 +53,7 @@ public class JavaFile {
         fileTemplate = fileTemplate.replace(", {PARAM}", "");
         fileTemplate = fileTemplate.replace("{CONSTRUCTOR_ASSIGN}", "");
         fileTemplate = fileTemplate.replace("{GETTER}", "");
+        fileTemplate = fileTemplate.replace("{SETTER}", "");
         fileTemplate = fileTemplate.replace("{PARAM}", "");
     }
 }

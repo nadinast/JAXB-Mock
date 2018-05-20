@@ -1,3 +1,5 @@
+package bindingCompiler;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,6 +15,7 @@ public class Utils {
             "{CONSTRUCTOR_ASSIGN}" +
             "   }\n" +
             "{GETTER}" +
+            "{SETTER}" +
             "}";
 
 
@@ -24,6 +27,15 @@ public class Utils {
             "\n   public {FIELD_TYPE} get{FIELD_NAME}(){\n" +
             "       return this.{FIELD_NAME};\n" +
             "   }\n";
+
+    private final String setterTemplate =
+            "\n   public void set{FIELD_NAME}({FIELD_TYPE} {FIELD_NAME}){\n" +
+                    "       this.{FIELD_NAME} = {FIELD_NAME};\n" +
+                    "   }\n";
+
+    public String getSetterTemplate() {
+        return setterTemplate;
+    }
 
     public String getFieldDeclarationTemplate() {
         return fieldDeclarationTemplate;
