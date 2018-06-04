@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class XSDReader extends DefaultHandler {
-    static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-    static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
     private String className;
     private HashMap<String, String> fields = new HashMap<>();
@@ -32,25 +30,25 @@ public class XSDReader extends DefaultHandler {
     public void startElement(String namespaceURI, String localName,
                              String qName, Attributes atts) throws SAXException {
         System.out.println("start element: " + qName);
-        switch(qName){
-            case "xs:element" :
+        switch (qName) {
+            case "xs:element":
                 String elementName = atts.getValue("name");
                 className = elementName.substring(0, 1).toUpperCase() + elementName.substring(1, elementName.length());
-                if(sequence)
+                if (sequence)
                     fileGenerator.addAttributes("ArrayList<" + className + ">", elementName);
                 fileGenerator.addFile(className);
                 System.out.println(className);
                 break;
-            case "xs:complexType" :
+            case "xs:complexType":
                 System.out.println("Complex type");
                 break;
-            case "xs:sequence" :
+            case "xs:sequence":
                 this.sequence = true;
                 System.out.println("List of elements");
                 break;
-            case "xs:attribute" :
+            case "xs:attribute":
                 String type = "String";
-                switch(atts.getValue("type")){
+                switch (atts.getValue("type")) {
                     case "xs:integer":
                         type = "int";
                         break;
@@ -74,7 +72,7 @@ public class XSDReader extends DefaultHandler {
                            java.lang.String qName)
             throws SAXException {
         System.out.println("end element:" + qName);
-        if(qName.equals("xs:element"))
+        if (qName.equals("xs:element"))
             fileGenerator.removeFile();
     }
 
@@ -97,12 +95,12 @@ public class XSDReader extends DefaultHandler {
     }
 
     public static void main(String[] args) {
-        if(args.length != 1){
+        if (args.length != 1) {
             System.err.println("Should receive XML file on the command line");
             System.exit(-1);
         }
 
-        try{
+        try {
             DefaultHandler handler = new XSDReader();
             SAXParserFactory parserFactory = SAXParserFactory.newInstance();
             //parserFactory.setValidating(true);
@@ -129,8 +127,7 @@ public class XSDReader extends DefaultHandler {
                 x = se.getException();
             }
             x.printStackTrace();
-        }
-        catch(ParserConfigurationException | IOException e){
+        } catch (ParserConfigurationException | IOException e) {
             e.printStackTrace();
         }
     }

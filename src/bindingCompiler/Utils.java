@@ -9,11 +9,10 @@ public class Utils {
 
 
     private final String classTemplate =
+            "package generatedClasses;\n" +
+            "import java.util.ArrayList;\n\n" +
             "public class {CLASS_NAME} {\n" +
             "{FIELD_DECL}" +
-            "\n   public {CLASS_NAME}({PARAM}){\n" +
-            "{CONSTRUCTOR_ASSIGN}" +
-            "   }\n" +
             "{GETTER}" +
             "{SETTER}" +
             "}";
@@ -21,8 +20,6 @@ public class Utils {
 
 
     private final String fieldDeclarationTemplate = "   private {FIELD_TYPE} {FIELD_NAME};\n";
-    private final String constructorParamTemplate = "{FIELD_TYPE} {FIELD_NAME}, ";
-    private final String constructorAssignTemplate = "      this.{FIELD_NAME} = {FIELD_NAME};\n";
     private final String getterTemplate =
             "\n   public {FIELD_TYPE} get{FIELD_NAME}(){\n" +
             "       return this.{FIELD_NAME};\n" +
@@ -45,14 +42,6 @@ public class Utils {
         return classTemplate;
     }
 
-    public String getConstructorParamTemplate() {
-        return constructorParamTemplate;
-    }
-
-    public String getConstructorAssignTemplate() {
-        return constructorAssignTemplate;
-    }
-
     public String getGetterTemplate() {
         return getterTemplate;
     }
@@ -73,7 +62,7 @@ public class Utils {
     public void writeToFile(String fileContents, File file) {
         try {
 
-            BufferedOutputStream buf = new BufferedOutputStream(new FileOutputStream(file.getName()));
+            BufferedOutputStream buf = new BufferedOutputStream(new FileOutputStream(file));
             byte[] contentBytes = fileContents.getBytes();
             System.out.println(file.getCanonicalPath());
             buf.write(contentBytes);
